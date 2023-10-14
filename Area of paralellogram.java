@@ -3,7 +3,9 @@ import java.text.*;
 import java.math.*;
 import java.util.regex.*;
 public class Solution {
-   static boolean flag=false;static int B;static int H; 
+static boolean flag=false;
+static int B;
+static int H; 
 static{
 Scanner P=new Scanner(System.in);
 B=P.nextInt();
