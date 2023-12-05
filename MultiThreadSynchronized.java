@@ -1,78 +1,96 @@
-import java.util.*;
+// Importing the Random class to generate random numbers
+import java.util.Random;
 
-class ThreadA implements Runnable {
-    private int n;
-    private Random random;
-    static int number;
+// This class generates random numbers and starts new threads to calculate their squares or cubes
+class RandomNumberGenerator implements Runnable {
+    // Creating a Random object to generate random numbers
+    private Random random = new Random();
+    // Counter to keep track of the number of random numbers generated
+    private int counter = 0;
+    // Limit for the number of random numbers to generate
+    private int limit = 10;
+    // Lock object for synchronization
+    private final Object lock = new Object();
 
-    public ThreadA(int n) {
-        this.n = n;
-        this.random = new Random();
-    }
+    // The run method is called when the thread starts
+    public void run() {
+        // Keep generating random numbers until the limit is reached
+        while (counter < limit) {
+            try {
+                // Pause for 2 seconds
+                Thread.sleep(2000);
+                // Generate a random number between 0 and 99
+                int randomnumber = random.nextInt(100);
 
-    public synchronized void run() {
-        try {
-            for (int i = 0; i < n; i++) {
-                number = random.nextInt(n);
-                Thread.sleep(1000);
+                // Print the random number
+                System.out.println("Random Number : " + randomnumber);
+
+                // If the random number is even and less than 100, calculate its square
+                if (randomnumber % 2 == 0 && randomnumber < 100) {
+                    // Synchronize on the lock object to prevent race conditions
+                    synchronized (lock) {
+                        // Start a new thread to calculate the square of the random number
+                        Thread evenThread = new Thread(new Square(randomnumber));
+                        evenThread.start();
+                    }
+                } else {
+                    // Synchronize on the lock object to prevent race conditions
+                    synchronized (lock) {
+                        // Start a new thread to calculate the cube of the random number
+                        Thread oddThread = new Thread(new Cube(randomnumber));
+                        oddThread.start();
+                    }
+                }
+                // Increment the counter
+                counter++;
+            } catch (InterruptedException e) {
+                // Print the stack trace for the InterruptedException
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            System.out.println("Exception in ThreadA");
         }
     }
 }
 
-class ThreadB implements Runnable {
-    private int n;
+// This class calculates the square of a number
+class Square implements Runnable {
+    // The number to square
+    private int number;
 
-    public ThreadB(int n) {
-        this.n = n;
+    // Constructor that takes the number to square
+    public Square(int number) {
+        this.number = number;
     }
 
-    public synchronized void run() {
-        try {
-            for (int i = 0; i < n; i++) {
-                int square = ThreadA.number * ThreadA.number;
-                System.out.println("ThreadB: " + square);
-                Thread.sleep(1000);
-            }
-        } catch (Exception e) {
-            System.out.println("Exception in ThreadB");
-        }
+    // The run method is called when the thread starts
+    public void run() {
+        // Print the square of the number
+        System.out.println("Square of " + number + " = " + (number * number));
     }
 }
 
-class ThreadC implements Runnable {
-    private int n;
+// This class calculates the cube of a number
+class Cube implements Runnable {
+    // The number to cube
+    private int number;
 
-    public ThreadC(int n) {
-        this.n = n;
+    // Constructor that takes the number to cube
+    public Cube(int number) {
+        this.number = number;
     }
 
-    public synchronized void run() {
-        try {
-            for (int i = 0; i < n; i++) {
-                int cube = ThreadA.number * ThreadA.number * ThreadA.number;
-                System.out.println("ThreadC: " + cube);
-                Thread.sleep(1000);
-            }
-        } catch (Exception e) {
-            System.out.println("Exception in ThreadC");
-        }
+    // The run method is called when the thread starts
+    public void run() {
+        // Print the cube of the number
+        System.out.println("Cube of " + number + " = " + (number * number * number));
     }
 }
 
+// The main class
 public class MultiThreadSynchronized {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the value of n:");
-        int n = sc.nextInt();
-        ThreadA a = new ThreadA(n);
-        ThreadB b = new ThreadB(n);
-        ThreadC c = new ThreadC(n);
-        new Thread(a).start();
-        new Thread(b).start();
-        new Thread(c).start();
-        sc.close();
+    // The main method
+    public static void main(String args[]) {
+        // Start a new thread to generate random numbers
+        Thread randomThread = new Thread(new RandomNumberGenerator());
+        randomThread.start();
     }
 }
