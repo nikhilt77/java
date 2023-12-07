@@ -1,4 +1,4 @@
-import java.swing.*;
+import javax.swing.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +36,7 @@ public class CalculatorSwing extends JFrame {
         add(b2);
         add(b3);
         add(b4);
-        b1.addActionListener(new ActionListener()) {
+        b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int a = Integer.parseInt(t1.getText());
                 int b = Integer.parseInt(t2.getText());
