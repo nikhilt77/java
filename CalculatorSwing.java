@@ -1,11 +1,4 @@
 import javax.swing.*;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -38,40 +31,58 @@ public class CalculatorSwing extends JFrame {
         add(b4);
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                int a = Integer.parseInt(t1.getText());
-                int b = Integer.parseInt(t2.getText());
-                int c = a + b;
-                t3.setText(String.valueOf(c));
+                try {
+                    int a = Integer.parseInt(t1.getText());
+                    int b = Integer.parseInt(t2.getText());
+                    int c = a + b;
+                    t3.setText(String.valueOf(c));
+                } catch (NumberFormatException e) {
+                    t3.setText("Invalid input");
+                }
             }
         });
         b2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                int a = Integer.parseInt(t1.getText());
-                int b = Integer.parseInt(t2.getText());
-                int c = a - b;
-                t3.setText(String.valueOf(c));
+                try {
+                    int a = Integer.parseInt(t1.getText());
+                    int b = Integer.parseInt(t2.getText());
+                    int c = a - b;
+                    t3.setText(String.valueOf(c));
+                } catch (NumberFormatException e) {
+                    t3.setText("Invalid input");
+                }
             }
         });
         b3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                int a = Integer.parseInt(t1.getText());
-                int b = Integer.parseInt(t2.getText());
-                int c = a * b;
-                t3.setText(String.valueOf(c));
+                try {
+                    int a = Integer.parseInt(t1.getText());
+                    int b = Integer.parseInt(t2.getText());
+                    int c = a * b;
+                    t3.setText(String.valueOf(c));
+                } catch (NumberFormatException e) {
+                    t3.setText("Invalid input");
+                }
             }
         });
         b4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                int a = Integer.parseInt(t1.getText());
-                int b = Integer.parseInt(t2.getText());
-                int c = a / b;
-                t3.setText(String.valueOf(c));
+                try {
+                    int a = Integer.parseInt(t1.getText());
+                    int b = Integer.parseInt(t2.getText());
+                    if (b == 0) throw new ArithmeticException();
+                    int c = a / b;
+                    t3.setText(String.valueOf(c));
+                } catch (NumberFormatException e) {
+                    t3.setText("Invalid input");
+                } catch (ArithmeticException e) {
+                    t3.setText("Cannot divide by zero");
+                }
             }
         });
     }
 
     public static void main(String[] args) {
-        // SwingUtilities.invokeLater(new Runnable() {
         CalculatorSwing c = new CalculatorSwing();
         c.setSize(400, 400);
         c.setVisible(true);
