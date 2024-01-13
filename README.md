@@ -36,7 +36,8 @@ Feel free to clone the repository and explore the code. Each file is a standalon
 git clone https://github.com/nikhilt77/your-repository.git
 cd your-repository
 # Compile and run Java programs using your preferred IDE or command line
-Contributing
+```
+## Contributing
 
 If you'd like to contribute or have ideas for improvement, please fork the repository and create a pull request. I appreciate any feedback or collaboration!
 Remember to replace "your-repository" with the actual name of your GitHub repository. 
