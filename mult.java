@@ -50,6 +50,12 @@ public class mult{
         Thread T1=new Thread(new ThreadB());
         Thread T2=new Thread(new ThreadC());
         T.start();
+        try{
+            T.join();
+        }
+        catch(InterruptedException e){
+            System.out.println("Interrupt Main");
+        }
         T1.start();
         T2.start();
     }
