@@ -20,7 +20,7 @@ class ThreadB implements Runnable{
     public void run(){
         for(int i=10;i>=0;i-=2){
         try{
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }
         catch(InterruptedException e){
             System.out.println("Interrupt B");
@@ -51,6 +51,9 @@ public class mult{
         Thread T1=new Thread(new ThreadB());
         Thread T2=new Thread(new ThreadC());
         T.start();
+        T.setPriority(Thread.MIN_PRIORITY);
+        T2.setPriority(Thread.MAX_PRIORITY);
+        T1.setPriority(T.getPriority()+1);
         try{
             T.join();
         }
