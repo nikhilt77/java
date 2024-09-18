@@ -24,7 +24,7 @@ class ThreadB implements Runnable{
         }
         catch(InterruptedException e){
             System.out.println("Interrupt B");
-        }
+        }   if(i==2) Thread.yield();
             System.out.println("Thread B: "+i);
         }
         System.out.println("Exiting Thread B");
@@ -35,6 +35,7 @@ class ThreadC implements Runnable{
         for(int i=0;i<10;i++){
         try{
             Thread.sleep(5000);
+            if(i==8) Thread.sleep(2000);
         }
         catch(InterruptedException e){
             System.out.println("Interrupt C");
