@@ -68,6 +68,7 @@ public class factoryDesign{
         Bank obj=new Bank();
         System.out.println("Enter the bank name: ");
         String bank=P.nextLine();
+        bank.toUpperCase();
         ATM bank1=(ATM)obj.getBank(bank);
         bank1.display();
         System.out.print("Enter Deposit:");
